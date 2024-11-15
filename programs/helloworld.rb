@@ -1,0 +1,18 @@
+=begin 
+Ruby program to print Hello World.
+=end
+
+puts "Hello World!"
+print "Hello World!"
+puts "Hello World!"
+
+#!/usr/bin/ruby
+
+x = 1
+if x > 2
+   puts "x is greater than 2"
+elsif x <= 2 and x!=0
+   puts "x is 1"
+else
+   puts "I can't guess the number"
+end

@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage[most]{tcolorbox}
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+\lstdefinestyle{example}{style=tcblatex,
+  classoffset=0,
+  texcsstyle=*\color{blue},%
+  deletetexcs={begin,end},
+  moretexcs={,%
+    pgfdeclarehorizontalshading,pgfuseshading,node,
+    useasboundingbox,draw}%
+  classoffset=1,
+  keywordstyle=\color{blue},%
+  morekeywords={tikzpicture,shade,fill,draw,path,node,child,line,width,rectangle},
+  classoffset=0}
+
+\tcbset{%
+  fillbackground/.style={before lower pre={%
+  \tikzset{every picture/.style={execute at end picture={\begin{pgfonlayer}{background}
+    \fill[yellow!25!white]
+    ([xshift=-1mm,yshift=-1mm]current bounding box.south west) rectangle
+    ([xshift=1mm,yshift=1mm]current bounding box.north east);
+    \end{pgfonlayer}}}}}},
+  explicitpicture/.style={before lower=\begin{center},after lower=\end{center},fillbackground}}
+
+\newtcblisting{sidebyside}[2][]{%
+  enhanced,frame hidden,
+  top=0pt,bottom=0pt,left=0pt,right=0pt,arc=0pt,boxrule=0pt,
+  colback=blue!25!white,
+  listing style=example,
+  sidebyside,text and listing,text outside listing,sidebyside gap=2mm,
+  lefthand width=#2,tikz lower,fillbackground,
+  #1}
+
+\begin{document}
+
+\begin{sidebyside}[before lower app={\path[] (-2,-0.5) rectangle (2,0.5);}]{4.2cm}
+\pgfdeclarehorizontalshading{myshadingA}
+  {1cm}{rgb(0cm)=(1,0,0); color(2cm)=(green); color(4cm)=(blue)}
+\pgfuseshading{myshadingA}
+\end{sidebyside}
+
+\begin{sidebyside}{4.2cm}
+\node {root}
+  child {node {left}}
+  child {node {right}
+    child {node {child}}
+    child {node {child}}
+};
+\end{sidebyside}
+
+\begin{sidebyside}[explicitpicture]{4.2cm}
+\begin{tikzpicture}[line width=20pt]
+  \useasboundingbox (0,-1.5) rectangle (3.5,1.5);
+  \draw[red] (0,0) -- (3,0);
+  \draw[gray,->] (0,0) -- (3,0);
+\end{tikzpicture}
+\end{sidebyside}
+
+\newline
+How do I typeset an entire document in sans-serif, e.g. Helvetica, without littering the document with font changes for every heading/paragraph, etc.? Like in How to set the font for a title (and chapter etc), but with the paragraphs all in sans-serif.
+
+For example, I've seen documents typeset in Computer Modern and then switched to Palatino, but can I do the same with Helvetica with a few commands at the beginning?
+
+(And please don't tell me to use a serif font for body copy / paragraphs. I know. I'm trying to use latex to typeset my resume to look like the one I've created in a word processor, which is hard to maintain but looks good. I'm hoping latex will let me do more advanced formatting/layout, separating content from form.)
+\end{document}
