@@ -1,5 +1,0 @@
-\begin{tikzpicture}[line width=20pt]
-  \useasboundingbox (0,-1.5) rectangle (3.5,1.5);
-  \draw[red] (0,0) -- (3,0);
-  \draw[gray,->] (0,0) -- (3,0);
-\end{tikzpicture}
